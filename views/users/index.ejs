@@ -15,9 +15,9 @@
             <div class="col-md-9">
                 <h1 class="h3 mb-3"><%= title %></h1>
                 <% blogs.forEach(blog => { %>
-                    <% if (blog.anasayfa) { %>
+                    
                         <%- include('../partials/blog-card',blog) %>
-                    <% } %>
+                   
                     
                 <% }) %>
                 
