@@ -2,6 +2,7 @@ const express = require("express");
 
 const app = express();
 app.set("view engine","ejs");
+app.use(express.urlencoded({ extended: false }));   
 console.log(app.get("view engine"));
 
 const path = require("path");
