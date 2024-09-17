@@ -10,25 +10,30 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-12 mt-3">
-                <form   method="post">
+                <form   method="post" enctype="multipart/form-data">
                     <div class="row mb-3">
                         <label for="baslik" class="col-sm-2 col-form-label">Başlık</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="baslik" name="baslik">
                         </div>
-                        
+                    </div>
+                    <div class="row mb-3">
+                        <label for="altbaslik" class="col-sm-2 col-form-label">Alt Başlık</label>
+                        <div class="col-sm-8">
+                            <textarea name="altbaslik"  class="form-control" rows="5"></textarea>
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <label for="aciklama" class="col-sm-2 col-form-label">Açıklama</label>
                         <div class="col-sm-8">
-                            <textarea name="aciklama"   class="form-control" rows="10"></textarea>
+                            <textarea name="aciklama" id="editor"  class="form-control" rows="10"></textarea>
                         </div>
                     </div>
                     
                     <div class="row mb-3">
                         <label for="resim" class="col-sm-2 col-form-label">Resim</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="resim" name="resim">
+                            <input type="file" class="form-control" id="resim" name="resim">
                         </div>
                         
                     </div>
@@ -87,6 +92,36 @@
     </div>  
 
 
+    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.css" />
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.1.0/"
+            }
+        }
+    </script>
 
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Bold,
+            Italic,
+            Font,
+            Paragraph
+        } from 'ckeditor5';
+
+        ClassicEditor
+            .create( document.querySelector( '#editor' ), {
+                plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+                toolbar: [
+                    'undo', 'redo', '|', 'bold', 'italic', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                ]
+            } )
+            .then( /* ... */ )
+            .catch( /* ... */ );
+    </script>
 </body>
 </html>

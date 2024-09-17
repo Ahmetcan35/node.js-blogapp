@@ -30,7 +30,7 @@ router.use("/blogs/:blogid", async function(req, res) {
         
         if(blog[0]){
             return res.render("users/blog-details",{
-            title:blog[1].blogtitle,
+            title:blog[0].blogtitle,
             blog : blog[0],
         });}
 
