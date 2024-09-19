@@ -1,11 +1,26 @@
 const mysql = require("mysql2"); //mysql dahil ettik
 const config = require("../config")// sql bağlantısını config den çekmek için 
-let connection = mysql.createConnection(config.db); // sql bağlantısı
 
-connection.connect(function(err){
-if(err){
-  return     console.log(err);
-}
-console.log("Mysql database e bağlanıldı.");
+const { Sequelize } = require('sequelize');
+
+const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password,{
+host:config.db.host,
+dialect:"mysql"
 });
-module.exports = connection.promise();
+async function connect() {
+  try {
+    await sequelize.authenticate();
+    console.log('Mysql server bağlantısı başarıyla sağlandı.');
+  } catch (error) {
+    console.error('Mysql server bağlantısında bir hata var:', error);
+  }
+}
+
+connect();
+
+module.exports= sequelize;
+
+
+
+
+

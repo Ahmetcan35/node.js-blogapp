@@ -23,7 +23,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                          <th scope="col" style="width: 20px;">id</th>
+                          <th scope="col" style="width: 20px;">Id</th>
                           <th scope="col">Başlık</th>
                           <th scope="col" style="width: 130px; "></th>
                         </tr>
@@ -31,10 +31,10 @@
                       <tbody>
                         <% categories.forEach(category => { %>
                             <tr>
-                                <td><%= category.categoryid %></td>
-                                <td><%= category.categoryname %></td>
-                                <td><a class="btn btn-sm btn-primary" href="/admin/categories/<%= category.categoryid %>">edit</a>
-                                    <a class="btn btn-sm btn-danger" href="/admin/category/delete/<%= category.categoryid %>">delete</a>
+                                <td><%= category.dataValues.id %></td>
+                                <td><%= category.dataValues.categoryname %></td>
+                                <td><a class="btn btn-sm btn-primary" href="/admin/categories/<%= category.dataValues.id %>">edit</a>
+                                    <a class="btn btn-sm btn-danger" href="/admin/category/delete/<%= category.dataValues.id %>">delete</a>
                                 </td>
                                 
                             </tr>
