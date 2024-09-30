@@ -21,6 +21,10 @@ const sequelize =require("./data/db");
 const dummyData =require("./data/dummy-data");
 const Category = require("./models/category");
 const Blog = require("./models/blog");
+const User = require("./models/user");
+
+Blog.belongsTo(User);
+User.hasMany(Blog);
 
 // İlişkiler
 Blog.belongsToMany(Category,{through: "blogCategories"});
