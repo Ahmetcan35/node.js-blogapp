@@ -26,6 +26,7 @@
                           <th scope="col" style="width: 50px;">Id</th>
                           <th scope="col" style="width: 150px; ">Resim</th>
                           <th scope="col">Başlık</th>
+                          <th scope="col">Kategori</th>
                           <th scope="col" style="width: 130px; "></th>
                         </tr>
                       </thead>
@@ -35,6 +36,10 @@
                                 <td><%= blog.dataValues.id %></td>
                                 <td><img src="/static/images/<%= blog.dataValues.resim %>" alt="" class="img-fluid"></td>
                                 <td><%= blog.dataValues.blogtitle %></td>
+                                <td>
+                                    <% blog.categories.forEach(category => { %>
+                                        <p><%= category.categoryname  %></p>
+                                    <% }) %></td>
                                 <td><a class="btn btn-sm btn-primary" href="/admin/blogs/<%= blog.dataValues.id %>">edit</a>
                                     <a class="btn btn-sm btn-danger" href="/admin/blog/delete/<%= blog.dataValues.id %>">delete</a>
                                 </td>

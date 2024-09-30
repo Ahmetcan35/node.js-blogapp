@@ -29,6 +29,8 @@ router.post("/category/create",  adminController.category_post_create); ///admin
 
 router.get("/blogs/:blogid", adminController.blog_get_update);//hazır blog detaili getirme
 router.get("/categories/:categoryid", adminController.category_get_update);//hazır category detaili getirme
+
+router.post("/categories/remove",adminController.get_category_remove);//category  blog ilikişi kaldırma
 router.post("/blogs/:blogid", imageUpload.upload.single("resim"),adminController.blog_post_update)//blog güncelleme post
 router.post("/categories/:categoryid", adminController.category_post_update)//category güncelleme post
 

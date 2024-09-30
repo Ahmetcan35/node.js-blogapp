@@ -28,6 +28,36 @@
                     </div>
                 
                 </form>
+                <p>Blog Sayısı: <%= countBlog %></p>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col" style="width: 50px;">Id</th>
+                          <th scope="col" style="width: 150px; ">Resim</th>
+                          <th scope="col">Başlık</th>
+                          <th scope="col" style="width: 200px; "></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% blogs.forEach(blog => { %>
+                            <tr>
+                                <td><%= blog.dataValues.id %></td>
+                                <td><img src="/static/images/<%= blog.dataValues.resim %>" alt="" class="img-fluid"></td>
+                                <td><%= blog.dataValues.blogtitle %></td>
+                                <td><a class="btn btn-sm btn-primary" href="/admin/blogs/<%= blog.dataValues.id %>">edit</a>
+
+                                    <form style="display: inline-block;" action="/admin/categories/remove" method="post">
+                                        <input type="hidden" name="blogid" value="<%= blog.id %>">
+                                        <input type="hidden" name="categoryid" value="<%= categories.id %>">
+                                        <button class="btn btn-sm btn-danger" type="submit">Kategoriden çıkar</button>
+                                    </form>
+                                </td>
+                                
+                            </tr>
+                        <% }) %>
+                    
+                      </tbody>
+                </table>
             </div>
         </div>
         

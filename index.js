@@ -23,13 +23,8 @@ const Category = require("./models/category");
 const Blog = require("./models/blog");
 
 // İlişkiler
-Category.hasMany(Blog,{
-    foreignKey:{
-        allowNull:false,
-        defaultValue: 1
-    }
-});
-Blog.belongsTo(Category);
+Blog.belongsToMany(Category,{through: "blogCategories"});
+Category.belongsToMany(Blog,{through: "blogCategories"});
 
 
 // İlişki tipinin uygulanması
