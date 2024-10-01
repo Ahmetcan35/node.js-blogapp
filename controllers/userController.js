@@ -60,7 +60,7 @@ exports.blog_list = async function(req, res) {
 }
 
 exports.home_list =async function(req, res) {
-
+console.log(req.session);
     try {
         const blogs = await Blog.findAll({
             where:{
@@ -74,7 +74,6 @@ exports.home_list =async function(req, res) {
             title:"Popüler Kurslar",
             categories:categories,
             selectedCategory : null,
-            isAuth:req.cookies.isAuth,
 
         });
         

@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+
 exports.get_register  = async function (req, res) {
     try {
         return res.render("auth/register",{
@@ -44,7 +45,7 @@ exports.get_login  = async function (req, res) {
 }
 
 exports.post_login  = async function (req, res) {
-
+    console.log(req.session);
     const email = req.body.email;
     const password = req.body.password;
     try {
@@ -65,16 +66,19 @@ exports.post_login  = async function (req, res) {
 
         const match= await bcrypt.compare(password, user.password );
 
-        if (match) {
-
-            res.cookie("isAuth",1);
+        if(match) {
+            // session
+            req.session.isAuth = true;
+            req.session.fullname = user.fullname;
+            // session in db
+            // token-based auth - api
             return res.redirect("/");
-            
-        }   
+        } 
         
         return res.render("auth/login",{
             title:"Login",
-            message: "Girdiğiniz parola hatalı."
+            message: "Girdiğiniz parola hatalı.",
+            
 
         });   
 
@@ -86,7 +90,7 @@ exports.post_login  = async function (req, res) {
 
 exports.get_logout  = async function (req, res) {
     try {
-        res.clearCookie("isAuth");
+        await req.session.destroy();
         return res.redirect("/account/login");
     } catch (err) {
         console.log(err);

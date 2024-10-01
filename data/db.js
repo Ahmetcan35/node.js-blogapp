@@ -8,8 +8,10 @@ host:config.db.host,
 dialect:"mysql",
 define: {
   timestamps:false
-}
+},
+storage: "./session.mysql",
 });
+
 async function connect() {
   try {
     await sequelize.authenticate();
