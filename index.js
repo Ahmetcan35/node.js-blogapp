@@ -1,13 +1,15 @@
 const express = require("express");
-
+const cookieParser= require("cookie-parser");
 const app = express();
 app.set("view engine","ejs");
-app.use(express.urlencoded({ extended: false }));   
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());   
 console.log(app.get("view engine"));
 
 const path = require("path");
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
+const authRoutes = require("./routes/auth");
 
 
 
@@ -15,6 +17,7 @@ const userRoutes = require("./routes/user");
 app.use("/libs", express.static(path.join(__dirname, "node_modules")));
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/admin",adminRoutes);
+app.use("/account",authRoutes);
 app.use(userRoutes);
 
 const sequelize =require("./data/db");

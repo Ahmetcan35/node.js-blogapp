@@ -74,6 +74,7 @@ exports.home_list =async function(req, res) {
             title:"Popüler Kurslar",
             categories:categories,
             selectedCategory : null,
+            isAuth:req.cookies.isAuth,
 
         });
         
