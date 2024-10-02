@@ -86,7 +86,7 @@ exports.blog_get_create = async function(req, res) {
         console.log(err);
     }
 }
-exports.blog_post_create =   async function (req, res) {
+exports.blog_post_create =  async function (req, res) {
     const baslik = req.body.baslik;
     const altbaslik = req.body.altbaslik;
     const aciklama = req.body.aciklama;

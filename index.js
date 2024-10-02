@@ -3,6 +3,7 @@ const cookieParser= require("cookie-parser");
 const app = express();
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const csurf = require("csurf");
 
 
 //template engine
@@ -27,12 +28,6 @@ const Blog = require("./models/blog");
 const User = require("./models/user");
 //middle ware
 app.use(express.urlencoded({ extended: false }));
-// app.use(function(req, res, next){
-//     res.locals.isAuth = req.session.isAuth;
-//     res.locals.fullname = req.session.fullname;
-//     next();
-// });
-
 app.use(cookieParser());   
 app.use(session({
     secret:"Hello world",
@@ -47,6 +42,7 @@ app.use(session({
 }
 ));
 app.use(locals);
+app.use(csurf());
 
 
 app.use("/libs", express.static(path.join(__dirname, "node_modules")));
@@ -56,15 +52,12 @@ app.use("/account",authRoutes);
 app.use(userRoutes);
 
 
+// İlişkiler
 Blog.belongsTo(User);
 User.hasMany(Blog);
-
-// İlişkiler
 Blog.belongsToMany(Category,{through: "blogCategories"});
 Category.belongsToMany(Blog,{through: "blogCategories"});
 
-
-// İlişki tipinin uygulanması
 //IFIE
 (async () => {
      await sequelize.sync({force: true});

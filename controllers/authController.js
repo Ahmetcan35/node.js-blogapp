@@ -18,15 +18,16 @@ exports.post_register = async function (req, res) {
     const password = req.body.password;
     const hashedPassword = await bcrypt.hash(password, 10);
     
+    
     try {
-        await User.create({
-            fullname : name,
-            email: email,
-            password: hashedPassword
-        });
-
+        const user = await User.findOne({where:{email:email}});
+        if(user){
+            req.session.message= {text: "Girdiğiniz email adresiyle daha önce bir kayıt oluşturulmuş.", class:"warning"};
+            return res.redirect("login");
+        }
+        await User.create({fullname : name,email: email,password: hashedPassword});
+        req.session.message = {text: "Hesabınıza giriş yapabilirsiniz.", class:"succes"};
         return res.redirect("login");
-
     } catch (err) {
         console.log(err);
     }
@@ -34,9 +35,12 @@ exports.post_register = async function (req, res) {
 }
 
 exports.get_login  = async function (req, res) {
+    const message = req.session.message;
+    delete req.session.message;
     try {
         return res.render("auth/login",{
-            title:"Login"
+            title:"Login",
+            message: message,
         })
     } catch (err) {
         console.log(err);
@@ -45,7 +49,6 @@ exports.get_login  = async function (req, res) {
 }
 
 exports.post_login  = async function (req, res) {
-    console.log(req.session);
     const email = req.body.email;
     const password = req.body.password;
     try {
@@ -58,7 +61,7 @@ exports.post_login  = async function (req, res) {
         if (!user) {
             return res.render("auth/login",{
                 title:"Login",
-                message: "Lütfen geçerli bir email giriniz."
+                message: {text: "Lütfen geçerli bir email giriniz.", class:"danger"}
 
             });          
         }
@@ -72,13 +75,13 @@ exports.post_login  = async function (req, res) {
             req.session.fullname = user.fullname;
             // session in db
             // token-based auth - api
-            return res.redirect("/");
+            const url = req.query.returnUrl || "";
+            return res.redirect(url);
         } 
         
         return res.render("auth/login",{
             title:"Login",
-            message: "Girdiğiniz parola hatalı.",
-            
+            message: {text: "Girdiğiniz parola hatalı.", class:"danger"}
 
         });   
 

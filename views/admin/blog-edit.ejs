@@ -8,11 +8,10 @@
 <%- include('../partials/nav') %>
 
     <div class="container mt-3">
-        <form   method="post" enctype="multipart/form-data">
+        <form   method="post" enctype="multipart/form-data" action="/admin/blogs/<%= blog.id %>?_csrf=<%= csrfToken %>">
             <div class="row my-5 gx-5  ">
                 
                     <div class="col-md-9 ">
-                        
                             <input type="hidden" name="blogid" value="<%= blog.id %>">
                             <input type="hidden" name="resim" value="<%= blog.resim %>">
                             <div class="row mb-3">
