@@ -2,6 +2,7 @@ const Category = require("../models/category");
 const Blog = require("../models/blog");
 const slugField = require("../helpers/slugfield");
 const User = require("../models/user");
+const Role = require("../models/role");
 const bcrypt = require("bcrypt");
 async function populate() {
    
@@ -132,7 +133,21 @@ async function populate() {
         const users = await User.bulkCreate([
             {fullname:"Ahmetcan Çetin", email:"ahmetcancetinz@gmail.com", password: await bcrypt.hash("123456789",10)},
             {fullname:"Cengiz Çetin", email:"cengizcetinz@gmail.com", password: await bcrypt.hash("123456789",10)},
+            {fullname:"Deniz Diker", email:"denizdiker@gmail.com", password: await bcrypt.hash("123456789",10)},
+            {fullname:"Mertcan Diker", email:"mertcandiker@gmail.com", password: await bcrypt.hash("123456789",10)},
         ])
+
+        const roles = await Role.bulkCreate([
+            {rolename:"admin"},
+            {rolename:"moderator"},
+            {rolename:"guest"}
+        ]);
+        await users[0].addRole(roles[0]);
+        await users[1].addRole(roles[1]);
+        await users[2].addRole(roles[1]);
+        await users[3].addRole(roles[2]);
+        
+
         await categories[0].addBlog(blogs[0]);
         await categories[0].addBlog(blogs[1]);
         await categories[0].addBlog(blogs[2]);

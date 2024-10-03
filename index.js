@@ -26,8 +26,9 @@ const authRoutes = require("./routes/auth");
 const Category = require("./models/category");
 const Blog = require("./models/blog");
 const User = require("./models/user");
+const Role = require("./models/role");
 //middle ware
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());   
 app.use(session({
     secret:"Hello world",
@@ -57,6 +58,9 @@ Blog.belongsTo(User);
 User.hasMany(Blog);
 Blog.belongsToMany(Category,{through: "blogCategories"});
 Category.belongsToMany(Blog,{through: "blogCategories"});
+
+User.belongsToMany(Role,{through: "userRoles"});
+Role.belongsToMany(User,{through: "userRoles"});
 
 //IFIE
 (async () => {

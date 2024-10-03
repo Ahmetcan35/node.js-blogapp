@@ -30,5 +30,16 @@ router.post("/categories/remove",isAuth,adminController.get_category_remove);//c
 router.get("/blogs",isAuth,adminController.admin_blogs);// admin blog listesi
 router.get("/categories",isAuth, adminController.admin_categories);// category list
 
+////////////////////////////////////////////////////////////////////////////////////////////////
+////role
+router.get("/roles",isAuth,adminController.get_roles);//role list
+router.get("/roles/:roleid",isAuth,csrf,adminController.get_role_edit);//get role edit
+router.post("/roles/remove",isAuth,adminController.roles_remove);//role list
+router.post("/roles/:roleid",isAuth,adminController.post_role_edit);//post role edit
+////////////////////////////////////////////////////////////////////////////////////////////////
+////user
+router.get("/users",isAuth,adminController.get_users);//get role edit
+router.get("/users/:userid",isAuth,csrf,adminController.get_user_edit);//get role edit
+router.post("/users/:userid",isAuth,adminController.post_user_edit);//get role edit
 module.exports = router;
 
