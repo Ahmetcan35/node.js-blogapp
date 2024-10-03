@@ -60,8 +60,8 @@ Category.belongsToMany(Blog,{through: "blogCategories"});
 
 //IFIE
 (async () => {
-     await sequelize.sync({force: true});
-     await dummyData();
+    //  await sequelize.sync({force: true});
+    //  await dummyData();
 })();
 
 
