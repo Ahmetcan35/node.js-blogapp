@@ -30,7 +30,8 @@ const Blog = sequelize.define( "blog",{
     onay:{
         type:DataTypes.BOOLEAN,
         allowNull:false,
-    }
+    },
+    
   
 },
 {

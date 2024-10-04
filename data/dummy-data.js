@@ -15,7 +15,12 @@ async function populate() {
             { categoryname: "Mobil Geliştirme" ,url:slugField("Mobil Geliştirme")},
             { categoryname: "Programlama" ,url:slugField("Programlama")}
         ]);
-
+        const users = await User.bulkCreate([
+            {fullname:"Ahmetcan Çetin", email:"ahmetcancetinz@gmail.com", password: await bcrypt.hash("123456789",10)},
+            {fullname:"Cengiz Çetin", email:"cengizcetinz@gmail.com", password: await bcrypt.hash("123456789",10)},
+            {fullname:"Deniz Diker", email:"denizdiker@gmail.com", password: await bcrypt.hash("123456789",10)},
+            {fullname:"Mertcan Diker", email:"mertcandiker@gmail.com", password: await bcrypt.hash("123456789",10)},
+        ])
         const blogs = await Blog.bulkCreate([
             {
                 blogtitle: "Komple Uygulamalı Web Geliştirme Eğitimi",
@@ -25,6 +30,7 @@ async function populate() {
                 resim: "1.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:3
             },
             {
                 blogtitle: "Python ile Sıfırdan İleri Seviye Python Programlama",
@@ -34,6 +40,7 @@ async function populate() {
                 resim: "2.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:3
             },
             {
                 blogtitle: "Sıfırdan İleri Seviye Modern Javascript Dersleri ES7+",
@@ -43,6 +50,7 @@ async function populate() {
                 resim: "4.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:3
             },
             {
                 blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -52,6 +60,7 @@ async function populate() {
                 resim: "5.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:2
             } ,
             {
                 blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -61,6 +70,7 @@ async function populate() {
                 resim: "5.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:2
             },
             {
                 blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -70,6 +80,7 @@ async function populate() {
                 resim: "5.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:2
             },
             {
                 blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -79,6 +90,16 @@ async function populate() {
                 resim: "5.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:2
+            },
+            {
+                blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
+                url:slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
+                altbaslik: "Sıfırdan İleri Seviye Python Dersleri.Veritabanı,Veri Analizi,Bot Yazımı,Web Geliştirme(Django)",
+                blogdetail: "En popüler programlama dili olan Javascript programlama dilini artık Node.js sayesinde server tabanlı bir dil olarak kullanabilirsin.Kurs sonunda sadece Javascript programlama dilini kullanarak Fullstack bir web geliştirici olmak istiyorsan hemen kursa katılmalısın! Üstelik 30 gün iade garantisiyle! Kursumuz piyasadaki en popüler ve en güncel Node.js kursudur.",
+                resim: "5.jpeg",
+                anasayfa: true,
+                onay: true,userId:2
             },
             {
                 blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -88,6 +109,7 @@ async function populate() {
                 resim: "5.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:3
             },
             {
                 blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
@@ -97,45 +119,14 @@ async function populate() {
                 resim: "5.jpeg",
                 anasayfa: true,
                 onay: true,
+                userId:3
             },
-            {
-                blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-                url:slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
-                altbaslik: "Sıfırdan İleri Seviye Python Dersleri.Veritabanı,Veri Analizi,Bot Yazımı,Web Geliştirme(Django)",
-                blogdetail: "En popüler programlama dili olan Javascript programlama dilini artık Node.js sayesinde server tabanlı bir dil olarak kullanabilirsin.Kurs sonunda sadece Javascript programlama dilini kullanarak Fullstack bir web geliştirici olmak istiyorsan hemen kursa katılmalısın! Üstelik 30 gün iade garantisiyle! Kursumuz piyasadaki en popüler ve en güncel Node.js kursudur.",
-                resim: "5.jpeg",
-                anasayfa: true,
-                onay: true,
-            },
-            {
-                blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-                url:slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
-                altbaslik: "Sıfırdan İleri Seviye Python Dersleri.Veritabanı,Veri Analizi,Bot Yazımı,Web Geliştirme(Django)",
-                blogdetail: "En popüler programlama dili olan Javascript programlama dilini artık Node.js sayesinde server tabanlı bir dil olarak kullanabilirsin.Kurs sonunda sadece Javascript programlama dilini kullanarak Fullstack bir web geliştirici olmak istiyorsan hemen kursa katılmalısın! Üstelik 30 gün iade garantisiyle! Kursumuz piyasadaki en popüler ve en güncel Node.js kursudur.",
-                resim: "5.jpeg",
-                anasayfa: true,
-                onay: true,
-            },
-            {
-                blogtitle: "Node.js ile Sıfırdan İleri Seviye Web Geliştirme",
-                url:slugField("Node.js ile Sıfırdan İleri Seviye Web Geliştirme"),
-                altbaslik: "Sıfırdan İleri Seviye Python Dersleri.Veritabanı,Veri Analizi,Bot Yazımı,Web Geliştirme(Django)",
-                blogdetail: "En popüler programlama dili olan Javascript programlama dilini artık Node.js sayesinde server tabanlı bir dil olarak kullanabilirsin.Kurs sonunda sadece Javascript programlama dilini kullanarak Fullstack bir web geliştirici olmak istiyorsan hemen kursa katılmalısın! Üstelik 30 gün iade garantisiyle! Kursumuz piyasadaki en popüler ve en güncel Node.js kursudur.",
-                resim: "5.jpeg",
-                anasayfa: true,
-                onay: true,
-            }  
 
 
 
         ]);
 
-        const users = await User.bulkCreate([
-            {fullname:"Ahmetcan Çetin", email:"ahmetcancetinz@gmail.com", password: await bcrypt.hash("123456789",10)},
-            {fullname:"Cengiz Çetin", email:"cengizcetinz@gmail.com", password: await bcrypt.hash("123456789",10)},
-            {fullname:"Deniz Diker", email:"denizdiker@gmail.com", password: await bcrypt.hash("123456789",10)},
-            {fullname:"Mertcan Diker", email:"mertcandiker@gmail.com", password: await bcrypt.hash("123456789",10)},
-        ])
+        
 
         const roles = await Role.bulkCreate([
             {rolename:"admin"},

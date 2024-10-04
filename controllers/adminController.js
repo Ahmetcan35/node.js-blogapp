@@ -13,9 +13,11 @@ const e = require("express");
 exports.blog_get_delete = async function (req, res) {
 
     const blogid = req.params.blogid;
+    const userid =req.session.userid;
+    const isAdmin = req.session.roles.includes("admin");
 
     try {
-        const blog = await Blog.findByPk(blogid);
+        const blog = await Blog.findOne({ where: isAdmin ? {id:blogid} : {id:blogid, userId:userid}});
         if(blog){
 
                 return res.render("admin/blog-delete",{
@@ -97,6 +99,7 @@ exports.blog_post_create =  async function (req, res) {
     const resim = req.file.filename;
     const anasayfa = req.body.anasayfa == "on" ? 1:0;
     const onay = req.body.onay == "on" ? 1:0;
+    const userid =req.session.userid;
     try {
         await Blog.create({
             blogtitle: baslik,
@@ -106,6 +109,7 @@ exports.blog_post_create =  async function (req, res) {
             resim: resim,
             anasayfa: anasayfa,
             onay: onay,
+            userId:userid
         });
         res.redirect("/admin/blogs?action=create");
 
@@ -139,12 +143,12 @@ exports.category_post_create = async function (req, res) {
 exports.blog_get_update = async function(req, res) {
 
     const blogid = req.params.blogid;
+    const userid =req.session.userid;
+    const isAdmin = req.session.roles.includes("admin");
 
     try {
         const blog= await Blog.findOne({
-            where:{
-                id:blogid
-            },
+            where: isAdmin ? {id:blogid} : {id:blogid, userId:userid},
             include:{
                 model:Category,
                 attributes:["id"]
@@ -204,6 +208,8 @@ exports.blog_post_update =  async function (req, res) {
     let resim= req.body.resim;
     const categoryIds = req.body.categories;
     const url = req.body.url;
+    const userid =req.session.userid;
+    
     if(req.file){
         resim = req.file.filename;
         fs.unlink("./public/images/" + req.body.resim, err => {
@@ -215,7 +221,8 @@ exports.blog_post_update =  async function (req, res) {
 try {
     const blog= await Blog.findOne({
         where:{
-            id:blogid
+            id:blogid,
+            userId:userid
         },
         include:{
             model:Category,
@@ -273,6 +280,9 @@ try {
 }
 ///BLOGS
 exports.admin_blogs = async function(req, res) {
+    const userid = req.session.userid;
+    const isModerator = req.session.roles.includes("moderator");
+    const isAdmin = req.session.roles.includes("isAdmin");
     try {
         const blogs= await Blog.findAll({
             attributes:["id","blogtitle","altbaslik","resim"],
@@ -281,7 +291,8 @@ exports.admin_blogs = async function(req, res) {
                   model: Category,
                   attributes: ['categoryname'] // Sadece categoryname çekiliyor
                 }
-              ]
+              ],
+              where:isModerator && !isAdmin ? {userId:userid}: null
             
     });
         
