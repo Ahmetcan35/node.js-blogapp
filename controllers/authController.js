@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt");
 const emailService = require("../helpers/send-mail");
 const config = require("../config");
 const crypto = require("crypto");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const { raw } = require("mysql2");
+const { text } = require("express");
 
 exports.get_register  = async function (req, res) {
     try {
@@ -17,20 +18,15 @@ exports.get_register  = async function (req, res) {
     
 }
 
-exports.post_register = async function (req, res) {
+exports.post_register = async function (req, res, next) {
     const name = req.body.name;
     const email = req.body.email;
-    const password = req.body.password;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const password = req.body.password; 
     
     
     try {
         const user = await User.findOne({where:{email:email}});
-        if(user){
-            req.session.message= {text: "Girdiğiniz email adresiyle daha önce bir kayıt oluşturulmuş.", class:"warning"};
-            return res.redirect("login");
-        }
-        const newUser = await User.create({fullname : name,email: email,password: hashedPassword});
+        const newUser = await User.create({fullname : name,email: email,password: password});
 
         emailService.sendMail({
             from: config.email.from, // sender address
@@ -43,7 +39,20 @@ exports.post_register = async function (req, res) {
         req.session.message = {text: "Hesabınıza giriş yapabilirsiniz.", class:"success"};
         return res.redirect("login");
     } catch (err) {
-        console.log(err);
+        console.log(err.name)
+        let msg ="";
+        if (err.name == "SequelizeValidationError" || err.name == "SequelizeUniqueConstraintError" ) {
+            for(let e of err.errors){
+                msg+=e.message + "";
+            }
+            return res.render("auth/register",{
+                title:"Register",
+                message: {text:msg, class:"danger"}
+            });
+        } else {
+              next(err);
+        }
+        
     }
     
 }
@@ -105,7 +114,7 @@ exports.post_login  = async function (req, res) {
         // });   
 
     } catch (err) {
-        console.log(err);
+        next(err);
     }
     
 }

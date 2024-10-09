@@ -4,7 +4,7 @@ const router = express.Router();
 const authController= require("../controllers/authController");
 const csrf = require("../middlewares/csrf");
 router.get("/register",csrf,authController.get_register);
-router.post("/register",authController.post_register);
+router.post("/register",csrf,authController.post_register);
 
 router.get("/login",csrf,authController.get_login);
 router.post("/login",authController.post_login);

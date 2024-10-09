@@ -18,7 +18,7 @@ router.post("/category/delete/:categoryid",isAdmin,adminController.category_post
 
 router.get("/blog/create",isModerator,csrf, adminController.blog_get_create); ///admin blog create sayfası get
 router.get("/category/create",isAdmin,csrf, adminController.category_get_create); ///admin category create sayfası get
-router.post("/blog/create",isModerator, imageUpload.upload.single("resim"),adminController.blog_post_create); ///admin blog create sayfası post
+router.post("/blog/create",isModerator,csrf, imageUpload.upload.single("resim"),adminController.blog_post_create); ///admin blog create sayfası post
 router.post("/category/create",isAdmin,  adminController.category_post_create); ///admin category create sayfası post
 
 router.get("/blogs/:blogid",isModerator,csrf,  adminController.blog_get_update);//hazır blog detaili getirme

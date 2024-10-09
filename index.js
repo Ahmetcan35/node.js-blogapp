@@ -16,7 +16,8 @@ const path = require("path");
 const sequelize =require("./data/db");
 const dummyData =require("./data/dummy-data");
 const locals = require("./middlewares/local");
-
+const log = require("./middlewares/log");
+const error = require("./middlewares/err-handling")
 
 //routes
 const adminRoutes = require("./routes/admin");
@@ -27,6 +28,7 @@ const Category = require("./models/category");
 const Blog = require("./models/blog");
 const User = require("./models/user");
 const Role = require("./models/role");
+const { title } = require("process");
 //middle ware
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());   
@@ -51,6 +53,12 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/admin",adminRoutes);
 app.use("/account",authRoutes);
 app.use(userRoutes);
+app.use("*",(req,res)=> {
+    res.status(404).render("error/404",{title:"Not Found"});
+});
+app.use(log);
+app.use(error);
+
 
 
 // İlişkiler
